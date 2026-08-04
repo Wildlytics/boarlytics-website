@@ -191,6 +191,10 @@ footer{background:#070807;border-top:1px solid var(--hair);padding:56px 24px 32p
   .menu-toggle{display:inline-flex}
 }
 @media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+.gallery{display:flex;gap:16px;overflow-x:auto;margin-top:40px;padding-bottom:14px;scroll-snap-type:x mandatory;-webkit-overflow-scrolling:touch}
+.gallery img{flex:0 0 auto;width:248px;border-radius:18px;border:1px solid var(--line);scroll-snap-align:start;background:#000}
+.gallery::-webkit-scrollbar{height:8px}
+.gallery::-webkit-scrollbar-thumb{background:var(--line);border-radius:4px}
 </style>
 </head>
 <body>
@@ -293,6 +297,15 @@ footer{background:#070807;border-top:1px solid var(--hair);padding:56px 24px 32p
     </div>
   </section>
 
+  <section id="gallery" style="background:var(--bg2);border-top:1px solid var(--hair)">
+    <div class="wrap">
+      <div class="eye" data-t="gal_eye"></div>
+      <h2 class="sec" data-t="gal_h2"></h2>
+      <p class="sec-lead" data-t="gal_lead"></p>
+      <div class="gallery" id="galGrid"></div>
+    </div>
+  </section>
+
   <section id="pricing" style="background:var(--bg2);border-top:1px solid var(--hair)">
     <div class="wrap">
       <div class="eye" data-t="price_eye"></div>
@@ -361,6 +374,7 @@ footer{background:#070807;border-top:1px solid var(--hair);padding:56px 24px 32p
       <a href="/agb" data-t="foot_agb"></a>
       <a href="/datenschutz" data-t="foot_ds"></a>
       <a href="/imprint" data-t="foot_imp"></a>
+      <a href="/account-deletion" data-t="foot_del"></a>
       <a href="mailto:info@boarlytics.com">info@boarlytics.com</a>
     </div>
   </div>
@@ -381,7 +395,7 @@ const I18N = {
   hero_cta2:"Mehr erfahren", hero_mini:"Kostenlos starten · bis zu 2 Kirrungen gratis",
   ph_cap:"Besuchsprognose heute Nacht", ph_last:"Letzter Besuch", ph_baited:"Bestückt", ph_today:"heute", ph_visits:"Besuche 36M", ph_prob:"Wahrscheinlichkeit deiner Sauen", ph_nav1:"Übersicht", ph_nav2:"Eintrag", ph_nav3:"Einstellungen",
   band1n:"4 Nächte", band1l:"Vorhersagehorizont", band2n:"Sauenjäger", band2l:"Für", band3n:"Herbst 2026", band3l:"App-Launch",
-  feat_eye:"Funktionen", feat_h2:"Mehr als nur ein Tagebuch", feat_lead:"Stütze deinen Instinkt mit einer berechneten Prognose, mit welcher Wahrscheinlichkeit Sauen an deine Kirrung kommen.",
+  feat_eye:"Funktionen", feat_h2:"Mehr als nur ein Tagebuch", gal_eye:"Einblicke", gal_h2:"So sieht Boar Forecast aus", gal_lead:"Ein Blick in die App – persönliche Prognose, Windanalyse, Übersicht deiner Kirrungen und schnelle Eingabe.", foot_del:"Konto löschen", feat_lead:"Stütze deinen Instinkt mit einer berechneten Prognose, mit welcher Wahrscheinlichkeit Sauen an deine Kirrung kommen.",
   wind_eye:"Wind-Analyse", wind_h2:"Der Wind entscheidet mit", wind_lead:"Sauen ziehen in Abhängigkeit der Windrichtung. Boar Forecast lernt aus deinen Daten, bei welcher Windrichtung an dieser Kirrung häufiger gewechselt wird – und gewichtet die Prognose entsprechend.",
   wind_legend:"<strong>&lt;&nbsp;1,0×</strong> ungünstige Windrichtung &nbsp;·&nbsp; <strong>1,0×</strong> neutral &nbsp;·&nbsp; <strong>&gt;&nbsp;1,0×</strong> günstige Windrichtung",
   wind_card_h:"💨 Wind & Besuchswahrscheinlichkeit",
@@ -402,7 +416,7 @@ const I18N = {
   hero_cta2:"Learn more", hero_mini:"Start free · up to 2 bait sites free",
   ph_cap:"Visit forecast tonight", ph_last:"Last visit", ph_baited:"Baited", ph_today:"today", ph_visits:"Visits 36M", ph_prob:"Your boar visit probability", ph_nav1:"Overview", ph_nav2:"Entry", ph_nav3:"Settings",
   band1n:"4 nights", band1l:"Forecast horizon", band2n:"Boar hunters", band2l:"Built for", band3n:"Autumn 2026", band3l:"App launch",
-  feat_eye:"Features", feat_h2:"More than just a journal", feat_lead:"Back your instinct with a calculated forecast of how likely boar are to visit your bait site.",
+  feat_eye:"Features", feat_h2:"More than just a journal", gal_eye:"Inside the app", gal_h2:"This is Boar Forecast", gal_lead:"A look inside – personal forecast, wind analysis, overview of your bait sites and quick entry.", foot_del:"Delete account", feat_lead:"Back your instinct with a calculated forecast of how likely boar are to visit your bait site.",
   wind_eye:"Wind analysis", wind_h2:"The wind has a say", wind_lead:"Boar move depending on the wind direction. Boar Forecast learns from your data which wind direction brings more visits to this bait site – and weights the forecast accordingly.",
   wind_legend:"<strong>&lt;&nbsp;1.0×</strong> unfavourable wind &nbsp;·&nbsp; <strong>1.0×</strong> neutral &nbsp;·&nbsp; <strong>&gt;&nbsp;1.0×</strong> favourable wind",
   wind_card_h:"💨 Wind & visit probability",
@@ -423,7 +437,7 @@ const I18N = {
   hero_cta2:"En savoir plus", hero_mini:"Gratuit · jusqu'à 2 agrainages",
   ph_cap:"Prévision de visite cette nuit", ph_last:"Dernière visite", ph_baited:"Agrainé", ph_today:"aujourd'hui", ph_visits:"Visites 36M", ph_prob:"Probabilité de visite", ph_nav1:"Aperçu", ph_nav2:"Saisie", ph_nav3:"Réglages",
   band1n:"4 nuits", band1l:"Horizon de prévision", band2n:"Chasseurs", band2l:"Conçu pour", band3n:"Automne 2026", band3l:"Lancement de l'app",
-  feat_eye:"Fonctions", feat_h2:"Plus qu'un simple journal", feat_lead:"Appuyez votre instinct sur une prévision calculée de la probabilité que les sangliers visitent votre agrainage.",
+  feat_eye:"Fonctions", feat_h2:"Plus qu'un simple journal", gal_eye:"Aperçu", gal_h2:"Voici Boar Forecast", gal_lead:"Un aperçu de l'app – prévision personnelle, analyse du vent, vue d'ensemble et saisie rapide.", foot_del:"Supprimer le compte", feat_lead:"Appuyez votre instinct sur une prévision calculée de la probabilité que les sangliers visitent votre agrainage.",
   wind_eye:"Analyse du vent", wind_h2:"Le vent joue un rôle", wind_lead:"Les sangliers se déplacent selon la direction du vent. Boar Forecast apprend de vos données quelle direction amène plus de visites à cet agrainage – et pondère la prévision en conséquence.",
   wind_legend:"<strong>&lt;&nbsp;1,0×</strong> vent défavorable &nbsp;·&nbsp; <strong>1,0×</strong> neutre &nbsp;·&nbsp; <strong>&gt;&nbsp;1,0×</strong> vent favorable",
   wind_card_h:"💨 Vent & probabilité de visite",
@@ -469,13 +483,41 @@ const FAQ=[
  {q:{de:"Funktioniert die App offline?",en:"Does the app work offline?",fr:"L'application fonctionne-t-elle hors ligne ?"}, a:{de:"Ja. Ohne Verbindung zeigt die App die zuletzt geladenen Prognosen an. Neue Berechnungen sind erst wieder mit Internet möglich.",en:"Yes. Without a connection the app shows the most recently loaded forecasts. New calculations require internet again.",fr:"Oui. Sans connexion, l'app affiche les dernières prévisions chargées. De nouveaux calculs nécessitent à nouveau internet."}},
  {q:{de:"Brauche ich eine Wildkamera?",en:"Do I need a trail camera?",fr:"Ai-je besoin d'une caméra ?"}, a:{de:"Nein. Du trägst Besuche selbst ein. Eine Kamera-Anbindung ist für die Zukunft geplant.",en:"No. You log visits yourself. Camera integration is planned for the future.",fr:"Non. Vous enregistrez les visites vous-même. Une intégration caméra est prévue pour l'avenir."}}
 ];
+const GALLERY=[1,2,3,4];
 const POSTS=[
+ {id:'nacht',hue:'#14261a', cat:{de:"Ansitz",en:"Hunting",fr:"Affût"}, date:{de:"5 Min.",en:"5 min",fr:"5 min"}, t:{de:"Nicht jede Nacht ist deine Nacht",en:"Not every night is your night",fr:"Toutes les nuits ne se valent pas"}, x:{de:"Stundenlang umsonst angesessen? Wie du mit Daten entscheidest, wann sich das Rausgehen wirklich lohnt.",en:"Sat for hours for nothing? How to use data to decide when heading out is really worth it.",fr:"Des heures à l'affût pour rien ? Comment décider avec des données quand la sortie en vaut la peine."}},
  {id:'wind',hue:'#16301a', cat:{de:"Verhalten",en:"Behaviour",fr:"Comportement"}, date:{de:"6 Min.",en:"6 min",fr:"6 min"}, t:{de:"Warum Schwarzwild bei Wind anders zieht",en:"Why wild boar move differently with the wind",fr:"Pourquoi le sanglier se déplace autrement selon le vent"}, x:{de:"Wind entscheidet oft, ob das Wild deine Kirrung überhaupt annimmt. Was dahinter steckt – und wie du es für den Ansitz nutzt.",en:"Wind often decides whether boar accept your bait site at all. What's behind it – and how to use it.",fr:"Le vent décide souvent si le gibier accepte votre agrainage. Ce qui se cache derrière – et comment l'exploiter."}},
  {id:'kirrung',hue:'#1a2b14', cat:{de:"Praxis",en:"Practice",fr:"Pratique"}, date:{de:"Bald verfügbar",en:"Coming soon",fr:"Bientôt disponible"}, t:{de:"Die Kirrung richtig führen: Rhythmus schlägt Menge",en:"Running a bait site right: rhythm beats quantity",fr:"Bien gérer l'agrainage : le rythme prime sur la quantité"}, x:{de:"Regelmäßigkeit prägt das Besuchsmuster stärker als die Futtermenge.",en:"Regularity shapes the visit pattern more than the amount of feed.",fr:"La régularité façonne le motif de visite plus que la quantité de nourriture."}},
  {id:'daten',hue:'#122417', cat:{de:"App",en:"App",fr:"App"}, date:{de:"Bald verfügbar",en:"Coming soon",fr:"Bientôt disponible"}, t:{de:"Was in die Prognose einfließt – und was nicht",en:"What goes into the forecast – and what doesn't",fr:"Ce qui entre dans la prévision – et ce qui n'y entre pas"}, x:{de:"Transparenz statt Blackbox: welche Faktoren das Modell nutzt.",en:"Transparency over black box: which factors the model uses.",fr:"Transparence plutôt que boîte noire : quels facteurs le modèle utilise."}},
  {id:'mond',hue:'#182814', cat:{de:"Verhalten",en:"Behaviour",fr:"Comportement"}, date:{de:"Bald verfügbar",en:"Coming soon",fr:"Bientôt disponible"}, t:{de:"Mond, Dämmerung, Temperatur: die kleinen Stellschrauben",en:"Moon, dusk, temperature: the small levers",fr:"Lune, crépuscule, température : les petits réglages"}, x:{de:"Nicht jeder Faktor wiegt gleich schwer.",en:"Not every factor carries the same weight.",fr:"Tous les facteurs n'ont pas le même poids."}}
 ];
 const ARTICLES={
+ nacht:{
+  de:`<button class="back" onclick="go('blog')">← Zurück zum Blog</button><div class="cat">Ansitz</div><h1>Nicht jede Nacht ist deine Nacht</h1><div class="by">Boarlytics Journal · ca. 5 Min.</div>
+   <p>Du sitzt Stunden auf dem Hochsitz. Nichts. Am nächsten Morgen erzählt dir der Nachbar, er hat drei geschossen. Kennst du. Das Frustrierende daran: Oft lag es nicht am Können, sondern an der Nacht.</p>
+   <h2>Warum manche Nächte einfach besser sind</h2>
+   <p>Schwarzwild folgt Mustern. Der Rhythmus an deiner Kirrung, die Windrichtung, das Wetter – all das entscheidet mit, ob die Sauen heute ziehen. Wer diese Muster kennt, verschenkt weniger Ansitze an aussichtslose Nächte.</p>
+   <h2>Vom Bauchgefühl zur Entscheidung</h2>
+   <p>Genau hier setzt Boar Forecast an: Aus deinen eigenen Einträgen und den Bedingungen der Nacht berechnet die App, wie wahrscheinlich ein Besuch ist – grün, gelb, rot, für die nächsten vier Nächte. Das nimmt dir die Entscheidung nicht ab, aber es macht sie besser.</p>
+   <blockquote>Nicht mehr Ansitze – die richtigen Ansitze.</blockquote>
+   <p>Am Ende bleibt Wild Wild, und keine Prognose ersetzt die Erfahrung am Ansitz. Aber wer weiß, wann sich das Rausgehen lohnt, sitzt seltener umsonst.</p>`,
+  en:`<button class="back" onclick="go('blog')">← Back to blog</button><div class="cat">Hunting</div><h1>Not every night is your night</h1><div class="by">Boarlytics Journal · approx. 5 min</div>
+   <p>You sit for hours on the stand. Nothing. Next morning your neighbour tells you he shot three. You know the feeling. The frustrating part: often it wasn't about skill, it was about the night.</p>
+   <h2>Why some nights are simply better</h2>
+   <p>Wild boar follow patterns. The rhythm at your bait site, the wind direction, the weather – all of it helps decide whether the boar move tonight. Knowing these patterns means wasting fewer sits on hopeless nights.</p>
+   <h2>From gut feeling to decision</h2>
+   <p>This is where Boar Forecast comes in: from your own entries and the night's conditions, the app calculates how likely a visit is – green, yellow, red, for the next four nights. It doesn't make the decision for you, but it makes it better.</p>
+   <blockquote>Not more sits – the right sits.</blockquote>
+   <p>In the end, game remains game, and no forecast replaces experience at the stand. But knowing when it's worth heading out means sitting in vain less often.</p>`,
+  fr:`<button class="back" onclick="go('blog')">← Retour au blog</button><div class="cat">Affût</div><h1>Toutes les nuits ne se valent pas</h1><div class="by">Boarlytics Journal · env. 5 min</div>
+   <p>Des heures à l'affût. Rien. Le lendemain, votre voisin vous annonce trois tirs. Ça vous parle. Le plus frustrant : souvent, ce n'était pas une question de talent, mais de nuit.</p>
+   <h2>Pourquoi certaines nuits sont meilleures</h2>
+   <p>Le sanglier suit des schémas. Le rythme à votre agrainage, la direction du vent, la météo – tout cela influe sur le fait que les sangliers se déplacent cette nuit. Connaître ces schémas, c'est gâcher moins d'affûts sur des nuits sans espoir.</p>
+   <h2>De l'intuition à la décision</h2>
+   <p>C'est là qu'intervient Boar Forecast : à partir de vos entrées et des conditions de la nuit, l'app calcule la probabilité d'une visite – vert, jaune, rouge, pour les quatre prochaines nuits. Elle ne décide pas à votre place, mais elle éclaire votre choix.</p>
+   <blockquote>Pas plus d'affûts – les bons affûts.</blockquote>
+   <p>Au final, le gibier reste le gibier, et aucune prévision ne remplace l'expérience. Mais savoir quand la sortie en vaut la peine, c'est attendre en vain moins souvent.</p>`
+ },
  wind:{
   de:`<button class="back" onclick="go('blog')">← Zurück zum Blog</button><div class="cat">Verhalten</div><h1>Warum Schwarzwild bei Wind anders zieht</h1><div class="by">Boarlytics Journal · ca. 6 Min.</div>
    <p>Kaum ein Faktor beschäftigt Jägerinnen und Jäger am Ansitz so sehr wie der Wind. Wer schon einmal bei drehendem Wind vergeblich auf der Kanzel saß, weiß: Schwarzwild zieht in Abhängigkeit der Windrichtung. Steht der Wind falsch, wird die beste Kirrung gemieden.</p>
@@ -525,7 +567,7 @@ function setLang(l,skipPersist){
  document.documentElement.lang=l;
  document.querySelectorAll('#langs button').forEach(b=>b.classList.toggle('active',b.dataset.l===l));
  document.querySelectorAll('[data-t]').forEach(el=>{const k=el.getAttribute('data-t'); if(I18N[l][k]!==undefined) el.innerHTML=I18N[l][k];});
- renderFeatures(); renderWind(); renderSteps(); renderFAQ(); renderPosts();
+ renderFeatures(); renderWind(); renderSteps(); renderFAQ(); renderPosts(); renderGallery();
 }
 
 function renderFeatures(){
@@ -554,6 +596,9 @@ function toggleFaq(i){
  a.style.maxHeight = open ? a.scrollHeight+'px' : '0';
 }
 function thumb(h){return `<svg viewBox="0 0 300 130" preserveAspectRatio="xMidYMid slice" style="width:100%;height:100%"><rect width="300" height="130" fill="${h}"/><path d="M0 96 Q75 70 150 90 T300 82 V130 H0 Z" fill="#0a0b0a" opacity=".55"/><path d="M0 110 Q75 90 150 106 T300 100 V130 H0 Z" fill="#0a0b0a" opacity=".8"/><circle cx="250" cy="32" r="14" fill="#93d13f" opacity=".85"/><path d="M40 116l6-10 6 10z" fill="#93d13f"/><path d="M52 116l6-14 6 14z" fill="#93d13f" opacity=".7"/></svg>`;}
+function renderGallery(){
+ document.getElementById('galGrid').innerHTML=GALLERY.map(n=>`<img src="/screens/s${n}_${lang}.jpg" alt="Boar Forecast Screenshot" loading="lazy">`).join('');
+}
 function renderPosts(){
  document.getElementById('posts').innerHTML=POSTS.map(p=>
   `<article class="pcard" onclick="openPost('${p.id}')"><div class="pthumb">${thumb(p.hue)}</div><div class="pbody"><div class="cat">${p.cat[lang]}</div><h3>${p.t[lang]}</h3><p>${p.x[lang]}</p><div class="pmeta">${p.date[lang]}</div></div></article>`
